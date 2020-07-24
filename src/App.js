@@ -28,13 +28,13 @@ function Count() {
   //     document.title = 'odd ' +state.count +' ***';
   //   }
   // },[state.count])  
-  const count = useEvenOdd();
-  const test = useTest();
+  const [handleCount, count] = useEvenOdd();
+  const [state, dispatch] = useTest();
   return (
     <React.Fragment>
-    <button onClick={() => test.dispatch({type: 'ADD'})}> click me ! {test.state.count}</button>
-    <button onClick={() => test.dispatch({type: 'REDUCE'})}> reduce click me ! {test.state.count}</button>
-    <button onClick={() => count.c()}> reduce click me ! {count.count}</button>
+    <button onClick={() => dispatch({type: 'ADD'})}> click me ! {state.count}</button>
+    <button onClick={() => dispatch({type: 'REDUCE'})}> reduce click me ! {state.count}</button>
+    <button onClick={() => handleCount()}> reduce click me ! {count}</button>
     </React.Fragment>
   );
 }
@@ -89,7 +89,7 @@ function useTest() {
       document.title = 'odd ' +state.count +' ***';
     }
   },[state.count])
-  return {state, dispatch};
+  return [state, dispatch];
 }
 
 function useEvenOdd(){
@@ -100,9 +100,9 @@ function useEvenOdd(){
     } else {
       document.title = 'odd ' +count +' ####';
      }
-  })
-  const c = function handleCount() {
+  },[count])
+  const handleCount = () => {
     setCount(count +1);
   }
-  return {c, count};
+  return [handleCount, count];
 }
